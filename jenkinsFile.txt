@@ -14,22 +14,18 @@ pipeline {
 	{
             steps {
                 echo "Hello World!"
-                sh "echo Hello from the shell"
-                sh "hostname"
-                sh "uptime"
-                sh '''
-                echo 'Multiline'
-                echo 'Example'
-                 '''
+                echo "echo Hello from the shell"
+                echo "hostname"
+                echo "uptime"
             	}
 	}
 
 stage('Clone sources') {
             steps{
-        git url: 'https://topgear-training-gitlab.wipro.com/AVITEPA/ILP_BookStoreWorkspace.git'
+        git url: 'https://github.com/sanjivkumar12/Pipeline.git'
         echo "Cloned Successfully"
             }
-    }
+    }	
     
 stage('ExampleUsingVariables') {
             steps {
@@ -47,12 +43,12 @@ stage('ExampleUsingVariables') {
             script{
 	try {
 		if('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-			mail (to: 'avinash.patel@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Back to normal", body: "Build back to normal: ${env.BUILD_URL}.");
+			mail (to: 'SANJIV.VERMA@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Back to normal", body: "Build back to normal: ${env.BUILD_URL}.");
 		} else {
-			mail (to: 'avinash.patel@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Back success", body: "Build success: ${env.BUILD_URL}.");
+			mail (to: 'SANJIV.VERMA@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Back success", body: "Build success: ${env.BUILD_URL}.");
 		}
 	} catch (e) {
-		mail (to: 'avinash.patel@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Failure!", body: "Build failed ${env.BUILD_URL}.");
+		mail (to: 'SANJIV.VERMA@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Failure!", body: "Build failed ${env.BUILD_URL}.");
 	}
 }
         }
