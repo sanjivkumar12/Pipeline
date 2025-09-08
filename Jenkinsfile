@@ -13,17 +13,14 @@ pipeline {
         stage('No-op') 
 	{
             steps {
-                echo "Hello World!"
-                echo "echo Hello from the shell"
-                echo "hostname"
-                echo "uptime"
+                echo "Hello, from the No-op stage"
             	}
 	}
 
-stage('Clone sources') {
+stage('Clone Repo') {
             steps{
         git url: 'https://github.com/sanjivkumar12/Pipeline.git'
-        echo "Cloned Successfully"
+        echo "Cloned repo Successfully"
             }
     }	
     
@@ -39,18 +36,6 @@ stage('ExampleUsingVariables') {
         always {
             echo 'One way or another, I have finished'
             deleteDir() /* clean up workspace */
-            
-            script{
-	try {
-		if('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-			mail (to: 'SANJIV.VERMA@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Back to normal", body: "Build back to normal: ${env.BUILD_URL}.");
-		} else {
-			mail (to: 'SANJIV.VERMA@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Back success", body: "Build success: ${env.BUILD_URL}.");
-		}
-	} catch (e) {
-		mail (to: 'SANJIV.VERMA@wipro.com', subject: "${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Failure!", body: "Build failed ${env.BUILD_URL}.");
-	}
-}
         }
         success {
             echo 'I succeeeded!'
